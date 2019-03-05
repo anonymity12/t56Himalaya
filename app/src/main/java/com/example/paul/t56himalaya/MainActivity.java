@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                     int size = categories.size();
                     LogUtil.d(TAG, "onSuccess: categories size is: " + size);
                     for (Category category : categories) {
-                        LogUtil.d(TAG, "category --- > " + category.getCategoryName());
+                        LogUtil.d(TAG, "category ---> " + category.getCategoryName());
                     }
                 }
             }
