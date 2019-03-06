@@ -1,15 +1,22 @@
 package com.example.paul.t56himalaya;
 
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.paul.t56himalaya.adapters.IndicatorAdapter;
 import com.example.paul.t56himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.category.Category;
 import com.ximalaya.ting.android.opensdk.model.category.CategoryList;
+
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,30 +24,29 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private MagicIndicator mMagicIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Map<String, String> map = new HashMap<String, String>();
-        CommonRequest.getCategories(map, new IDataCallBack<CategoryList>() {
-            @Override
-            public void onSuccess(@Nullable CategoryList categoryList) {
-                List<Category> categories = categoryList.getCategories();
-                if (categories != null) {
-                    int size = categories.size();
-                    LogUtil.d(TAG, "onSuccess: categories size is: " + size);
-                    for (Category category : categories) {
-                        LogUtil.d(TAG, "category ---> " + category.getCategoryName());
-                    }
-                }
-            }
+        initView();
+    }
 
-            @Override
-            public void onError(int i, String s) {
-                Log.d(TAG, "onError: error msg" + s);
-            }
-        });
+    private void initView() {
+        mMagicIndicator = this.findViewById(R.id.main_indicator);
+        mMagicIndicator.setBackgroundColor(getResources().getColor(R.color.main_color));
+        // 创建适配器
+        IndicatorAdapter adapter = new IndicatorAdapter(this);
+        CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setAdapter(adapter);
+
+        //s2 view pager
+        ViewPager contentPager = findViewById(R.id.content_pager);
+
+        // s3 bind viewpager and adapter
+        mMagicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(mMagicIndicator, contentPager);
     }
 }
