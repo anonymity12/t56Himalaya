@@ -1,12 +1,15 @@
 package com.example.paul.t56himalaya;
 
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.paul.t56himalaya.adapters.IndicatorAdapter;
+import com.example.paul.t56himalaya.adapters.MainContentAdapter;
 import com.example.paul.t56himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
@@ -22,9 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
     private static final String TAG = "MainActivity";
     private MagicIndicator mMagicIndicator;
+    private ViewPager contentPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,12 @@ public class MainActivity extends AppCompatActivity {
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdapter(adapter);
 
+
         //s2 view pager
-        ViewPager contentPager = findViewById(R.id.content_pager);
+        contentPager = findViewById(R.id.content_pager);
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        MainContentAdapter mainContentAdapter = new MainContentAdapter(supportFragmentManager);
+        contentPager.setAdapter(mainContentAdapter);
 
         // s3 bind viewpager and adapter
         mMagicIndicator.setNavigator(commonNavigator);

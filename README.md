@@ -7,10 +7,10 @@ see: https://space.bilibili.com/44272436/video
 
 # class 4 0227 添加自定义的Log 输出格式
 
-<img src="/img/logUtilOK.jpg" width = "500" height = "150" align="right"/>
+<img src="/img/logUtilOK.jpg" width = "500" height = "150" align="middle"/>
 
 # lesson 6 done 添加indicator
 
-<img src="/img/L6OK.jpg" width = "400" height = "250" align="right"/>
+<img src="/img/L6OK.jpg" width = "400" height = "250" align="middle"/>
 
 
