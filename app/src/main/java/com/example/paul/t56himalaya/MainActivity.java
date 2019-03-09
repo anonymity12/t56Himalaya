@@ -29,6 +29,7 @@ public class MainActivity extends FragmentActivity {
     private static final String TAG = "MainActivity";
     private MagicIndicator mMagicIndicator;
     private ViewPager contentPager;
+    private IndicatorAdapter mIndicatorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +37,29 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        mIndicatorAdapter.setOnIndicatorTapClickListener(new IndicatorAdapter.OnIndicatorTapClickListener() {
+            @Override
+            public void OnTabClick(int index) {
+                LogUtil.d(TAG, "click :" + index);
+                if (contentPager != null) {
+                    contentPager.setCurrentItem(index);
+                }
+            }
+        });
+
     }
 
     private void initView() {
         mMagicIndicator = this.findViewById(R.id.main_indicator);
         mMagicIndicator.setBackgroundColor(getResources().getColor(R.color.main_color));
         // 创建适配器
-        IndicatorAdapter adapter = new IndicatorAdapter(this);
+        mIndicatorAdapter = new IndicatorAdapter(this);
         CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setAdapter(adapter);
+        commonNavigator.setAdapter(mIndicatorAdapter);
 
 
         //s2 view pager

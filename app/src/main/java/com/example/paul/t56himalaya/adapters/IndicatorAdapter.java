@@ -21,6 +21,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 public class IndicatorAdapter extends CommonNavigatorAdapter {
 
     private final String[] mTitles;
+    private OnIndicatorTapClickListener mOnTabClickListener;
 
     public IndicatorAdapter(Context context) {
         mTitles = context.getResources().getStringArray(R.array.indicator_title);
@@ -34,7 +35,7 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
     }
 
     @Override
-    public IPagerTitleView getTitleView(Context context, int i) {
+    public IPagerTitleView getTitleView(Context context, final int i) {
         ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
         colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#aaffffff"));
         colorTransitionPagerTitleView.setSelectedColor(Color.parseColor("#ffffff"));
@@ -43,7 +44,9 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
         colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO: 2019/3/6
+                if (mOnTabClickListener != null) {
+                    mOnTabClickListener.OnTabClick(i);
+                }
             }
         });
         return colorTransitionPagerTitleView;
@@ -56,5 +59,13 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
         indicator.setColors(Color.parseColor("#ffffff"));
 
         return indicator;
+    }
+
+    public void setOnIndicatorTapClickListener(OnIndicatorTapClickListener listener) {
+        this.mOnTabClickListener = listener;
+    }
+
+    public interface OnIndicatorTapClickListener {
+        void OnTabClick(int index);
     }
 }
