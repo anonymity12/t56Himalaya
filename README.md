@@ -13,4 +13,14 @@ see: https://space.bilibili.com/44272436/video
 
 <img src="/img/L6OK.jpg" width = "400" height = "250" align="middle"/>
 
+# lesson 7 indicator 和 viewpager 的联动
+
+增加indicator 的tab click 触发viewpager的跳转能力
+
+
+# lesson8 增加一个search icon
+
+<img src="/img/L8Ok.jpg" width = "400" height = "250" align="middle"/>
+
+
 

@@ -59,6 +59,7 @@ public class MainActivity extends FragmentActivity {
         // 创建适配器
         mIndicatorAdapter = new IndicatorAdapter(this);
         CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setAdjustMode(true);
         commonNavigator.setAdapter(mIndicatorAdapter);
 
 
