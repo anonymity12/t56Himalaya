@@ -18,9 +18,14 @@ see: https://space.bilibili.com/44272436/video
 增加indicator 的tab click 触发viewpager的跳转能力
 
 
-# lesson8 增加一个search icon
+# lesson8+9 增加一个search icon
 
 <img src="/img/L8Ok.jpg" width = "400" height = "250" align="middle"/>
 
+# lesson 10 get data done!!
+
+```
+03-13 22:47:35.132 6749-6749/com.example.paul.t56himalaya D/[com.example.paul.t56himalaya]RecommendFragment: got! size --- >20
+```
 
 
