@@ -1,5 +1,6 @@
 package com.example.paul.t56himalaya.fragments;
 
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import com.example.paul.t56himalaya.R;
 import com.example.paul.t56himalaya.adapters.RecommendListAdapter;
 import com.example.paul.t56himalaya.base.BaseFragment;
+import com.example.paul.t56himalaya.interfaces.IRecommendViewCallback;
+import com.example.paul.t56himalaya.presenters.RecommendPresenter;
 import com.example.paul.t56himalaya.utils.Constants;
 import com.example.paul.t56himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
@@ -28,60 +31,53 @@ import java.util.Map;
  * Desc:
  */
 
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback {
     private static final String TAG = "RecommendFragment";
     private RecyclerView mRecommendRv;
     private RecommendListAdapter recommendListAdapter;
+    private RecommendPresenter mPresenter;
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         // s1 get view
         View rootView = layoutInflater.inflate(R.layout.fragment_recommend, container, false);
         mRecommendRv = rootView.findViewById(R.id.recommend_list);
-        // s1 set layout mgr
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecommendRv.setLayoutManager(linearLayoutManager);
 
+
         recommendListAdapter = new RecommendListAdapter();
         mRecommendRv.setAdapter(recommendListAdapter);
 
-        // s2 get data
-        getRecommendData();
+        mPresenter = RecommendPresenter.getsInstance();
+        mPresenter.registerViewCallback(this);
+        mPresenter.getRecommendList();
+
         return rootView;
     }
 
-    /**
-     * file:///Users/paul/Downloads/sourceCode/XimalayaAndroidSDK_6.2.5/%E5%96%9C%E9%A9%AC%E6%8B%89%E9%9B%85SDK%E6%8E%A5%E5%85%A5%E6%96%87%E6%A1%A3.html
-     * 3.10.6 获取猜你喜欢专辑
-     */
-    private void getRecommendData() {
-        // encap the param
-        Map<String, String> map = new HashMap<>();
-        map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMEND_COUNT + "");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
-            @Override
-            public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
-                LogUtil.d(TAG," thread name --> " + Thread.currentThread().getName());
-                if (gussLikeAlbumList != null) {
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
-                    if (albumList != null) {
-                        LogUtil.d(TAG, "got! size --- >" + albumList.size());
-                        // 数据回来之后，我们要用adapter 更新view（更新UI，发生在主线程）
-                        upRecommendUI(albumList);
-                    }
-                }
-            }
 
-            @Override
-            public void onError(int i, String s) {
-                LogUtil.d(TAG, "error --> " + s);
-
-            }
-        });
+    @Override
+    public void onRecommendListLoad(List<Album> result) {
+        recommendListAdapter.setData(result);
     }
 
-    private void upRecommendUI(List<Album> albumList) {
-        recommendListAdapter.setData(albumList);
+    @Override
+    public void onLoadMore(List<Album> result) {
+
+    }
+
+    @Override
+    public void onRefreshMore(List<Album> result) {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unRegisterViewCallback(this);
+
     }
 }
