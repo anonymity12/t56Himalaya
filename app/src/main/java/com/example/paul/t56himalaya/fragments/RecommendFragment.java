@@ -1,11 +1,14 @@
 package com.example.paul.t56himalaya.fragments;
 
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.paul.t56himalaya.R;
+import com.example.paul.t56himalaya.adapters.RecommendListAdapter;
 import com.example.paul.t56himalaya.base.BaseFragment;
 import com.example.paul.t56himalaya.utils.Constants;
 import com.example.paul.t56himalaya.utils.LogUtil;
@@ -27,10 +30,21 @@ import java.util.Map;
 
 public class RecommendFragment extends BaseFragment {
     private static final String TAG = "RecommendFragment";
+    private RecyclerView mRecommendRv;
+    private RecommendListAdapter recommendListAdapter;
+
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         // s1 get view
         View rootView = layoutInflater.inflate(R.layout.fragment_recommend, container, false);
+        mRecommendRv = rootView.findViewById(R.id.recommend_list);
+        // s1 set layout mgr
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecommendRv.setLayoutManager(linearLayoutManager);
+
+        recommendListAdapter = new RecommendListAdapter();
+
         // s2 get data
         getRecommendData();
         return rootView;
