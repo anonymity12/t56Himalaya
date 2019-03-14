@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.example.paul.t56himalaya.R;
 
@@ -75,6 +76,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             albumDescrTv.setText(album.getAlbumIntro());
             albumPlayCountTv.setText(album.getPlayCount() + "");
             albumContentCountTv.setText(album.getIncludeTrackCount() + "");
+            Picasso.with(itemView.getContext()).load(album.getCoverUrlLarge()).into(albumCoverIv);
         }
     }
 }

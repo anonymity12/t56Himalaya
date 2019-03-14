@@ -44,6 +44,7 @@ public class RecommendFragment extends BaseFragment {
         mRecommendRv.setLayoutManager(linearLayoutManager);
 
         recommendListAdapter = new RecommendListAdapter();
+        mRecommendRv.setAdapter(recommendListAdapter);
 
         // s2 get data
         getRecommendData();
@@ -61,10 +62,13 @@ public class RecommendFragment extends BaseFragment {
         CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
             @Override
             public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
+                LogUtil.d(TAG," thread name --> " + Thread.currentThread().getName());
                 if (gussLikeAlbumList != null) {
                     List<Album> albumList = gussLikeAlbumList.getAlbumList();
                     if (albumList != null) {
                         LogUtil.d(TAG, "got! size --- >" + albumList.size());
+                        // 数据回来之后，我们要用adapter 更新view（更新UI，发生在主线程）
+                        upRecommendUI(albumList);
                     }
                 }
             }
@@ -75,5 +79,9 @@ public class RecommendFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void upRecommendUI(List<Album> albumList) {
+        recommendListAdapter.setData(albumList);
     }
 }

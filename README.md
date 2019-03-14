@@ -29,3 +29,8 @@ see: https://space.bilibili.com/44272436/video
 ```
 
 
+# L11 获取数据到recyclerView OK了
+
+<img src="/img/L11RecyclerViewOK.jpeg" width = "400" height = "400" align="middle"/>
+
+
