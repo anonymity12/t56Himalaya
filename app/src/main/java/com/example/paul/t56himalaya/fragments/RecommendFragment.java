@@ -21,6 +21,8 @@ import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,7 @@ import java.util.Map;
 /**
  * Created by paul on 2019/3/7
  * last modified at 22:02.
- * Desc:
+ * Desc: 推荐页面，mvp 中的view
  */
 
 public class RecommendFragment extends BaseFragment implements IRecommendViewCallback {
@@ -45,6 +47,15 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecommendRv.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                outRect.bottom = UIUtil.dip2px(view.getContext(), 10);
+                outRect.top = UIUtil.dip2px(view.getContext(), 10);
+                outRect.left = UIUtil.dip2px(view.getContext(), 10);
+                outRect.right = UIUtil.dip2px(view.getContext(), 10);
+            }
+        });
         mRecommendRv.setLayoutManager(linearLayoutManager);
 
 

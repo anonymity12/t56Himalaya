@@ -34,3 +34,27 @@ see: https://space.bilibili.com/44272436/video
 <img src="./img/L11RecyclerViewOK.jpeg" width = "400" height = "400" align="middle"/>
 
 
+# L12 UI 优化： 实现 圆角和间隙
+
+- [x] 优化了封面图：
+
+把背景蓝色图去掉了，用fitxy 以至于不显示之
+
+普通矩形-》 圆角矩形, by: `RoundRectImage.java`
+
+- [x] 优化了rv 的 间隙
+
+增加recyclerView的间隙  by:
+
+ `recyclerView.addItemDecoration()`
+
+用到一个UI  dip2px 的工具类:
+
+`UIUtil.dip2px(view.getContext(), 10);`
+
+item 卡片也有圆角，by 添加一个`shape_album_item_bg.xml`
+
+上下左右都有间隙，最终效果如图
+
+
+<img src="./img/L12OK.jpeg" width = "200" height = "300" align="middle"/>
